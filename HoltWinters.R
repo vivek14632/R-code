@@ -1,7 +1,8 @@
-HoltWinters1<- function (x, alpha = NULL, beta = NULL, gamma = NULL, seasonal = c("additive", 
+HoltWinters.new<- function (x, alpha = NULL, beta = NULL, gamma = NULL, seasonal = c("additive", 
                                                                    "multiplicative"), start.periods = 2, l.start = NULL, b.start = NULL, 
           s.start = NULL, optim.start = c(alpha = 0.3, beta = 0.1, 
-                                          gamma = 0.1), optim.control = list()) 
+                                          gamma = 0.1), optim.control = list(),
+          alpha.max=1,beta.max=1,gamma.max=1) 
 {
   x <- as.ts(x)
   seasonal <- match.arg(seasonal)
@@ -64,7 +65,7 @@ HoltWinters1<- function (x, alpha = NULL, beta = NULL, gamma = NULL, seasonal = 
       if (is.null(beta)) {
         error <- function(p) hw(p[1L], p[2L], p[3L])$SSE
         sol <- optim(optim.start, error, method = "L-BFGS-B", 
-                     lower = c(0.1, 0.1, 0.1), upper = c(0.4, 0.4, 0.4), control = optim.control)
+                     lower = c(0.1, 0.1, 0.1), upper = c(alpha.max, beta.max, gamma.max), control = optim.control)
         if (sol$convergence || any(sol$par < 0 | sol$par > 
                                    1)) {
           if (sol$convergence > 50) {
@@ -167,3 +168,4 @@ HoltWinters1<- function (x, alpha = NULL, beta = NULL, gamma = NULL, seasonal = 
                                                                                                                                                                                               1L:f]), seasonal = seasonal, SSE = final.fit$SSE, 
                  call = match.call()), class = "vivek")
 }
+
