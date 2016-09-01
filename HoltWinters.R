@@ -166,6 +166,5 @@ HoltWinters.new<- function (x, alpha = NULL, beta = NULL, gamma = NULL, seasonal
                                                                        1], b = if (!is.logical(beta) || beta) final.fit$trend[len + 
                                                                                                                                 1], s = if (!is.logical(gamma) || gamma) final.fit$seasonal[len + 
                                                                                                                                                                                               1L:f]), seasonal = seasonal, SSE = final.fit$SSE, 
-                 call = match.call()), class = "vivek")
+                 call = match.call()), class = "HoltWinters")
 }
-
